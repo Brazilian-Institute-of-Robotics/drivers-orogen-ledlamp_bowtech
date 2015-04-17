@@ -1,0 +1,21 @@
+name "ledlamp_bowtech"
+
+import_types_from "ledlamp_bowtechTypes.hpp"
+import_types_from "base"
+
+using_library "ledlamp_bowtech"
+using_library "iodrivers_base"
+
+
+task_context "Task" do
+    subclasses "iodrivers_base::Task"
+
+    needs_configuration
+
+    property("current_address", "int", -1).
+	.doc ''
+
+    
+    periodic 0.1
+end
+
