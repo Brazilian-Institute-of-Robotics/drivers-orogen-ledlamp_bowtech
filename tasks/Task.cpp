@@ -28,6 +28,23 @@ bool Task::configureHook()
 {
     if (! TaskBase::configureHook())
         return false;
+
+    //open serial port
+    lamps.openSerial(_port.get(), _baud_rate.get());
+
+    ////////////
+    //TODO: test if the informed addresses are valid.
+    ///////////
+
+    led_list = _led_list.get();
+
+
+    for (int i = 0; i < led_list.size(); ++i)
+    {
+    	lamps.setLightLevel(led_list[i].light_level, led_list[i].address);
+    	lamps.setPowerUpLightLevel(led_list[i].power_up_light_level, led_list[i].address);
+    }
+
     return true;
 }
 bool Task::startHook()
@@ -39,6 +56,10 @@ bool Task::startHook()
 void Task::updateHook()
 {
     TaskBase::updateHook();
+
+
+
+
 }
 void Task::errorHook()
 {

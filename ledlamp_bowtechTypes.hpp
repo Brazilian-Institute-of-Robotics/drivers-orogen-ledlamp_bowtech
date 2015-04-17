@@ -12,17 +12,12 @@
 
 namespace ledlamp_bowtech {
 
-	struct LedAttributes
-	{
-		uint8_t address;
-		uint8_t light_level;
-		uint8_t power_up_light_level;
-	};
-
 	struct LedLamp
 	{
 		std::string name;
-		LedAttributes attribute;
+		uint8_t address;
+		uint8_t light_level;
+		uint8_t power_up_light_level;
 	};
 }
 

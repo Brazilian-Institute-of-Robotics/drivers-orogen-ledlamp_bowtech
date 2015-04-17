@@ -4,6 +4,7 @@
 #define LEDLAMP_BOWTECH_TASK_TASK_HPP
 
 #include "ledlamp_bowtech/TaskBase.hpp"
+#include "ledlamp_bowtech/BowtechDriver.hpp"
 
 namespace ledlamp_bowtech {
 
@@ -26,6 +27,10 @@ namespace ledlamp_bowtech {
 	friend class TaskBase;
     protected:
 
+	BowtechDriver lamps;
+    std::vector<LedLamp> led_list;
+    std::vector<uint8_t> led_addresses;
+    int
 
 
     public:
