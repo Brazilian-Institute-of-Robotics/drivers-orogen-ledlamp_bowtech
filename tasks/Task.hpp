@@ -30,8 +30,7 @@ namespace ledlamp_bowtech {
 	BowtechDriver lamps;
     std::vector<LedLamp> led_list;
     std::vector<uint8_t> led_addresses;
-    int
-
+    int light_level_all;
 
     public:
         /** TaskContext constructor for Task

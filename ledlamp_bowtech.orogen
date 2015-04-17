@@ -13,14 +13,19 @@ task_context "Task" do
 
     property("port", "std/string", "/dev/ttyUSB0").
         doc 'Device port'
+        
     property("baud_rate", "int", 9600).
         doc 'Device baud rate'
+        
     property("led_list", "std/vector<ledlamp_bowtech/LedLamp>").
-		doc 'List of all connected lamps'
-	property("light_level_all", "int", -1).
-		doc 'This property controls the light level for all lamps. Non negative values will ignore individual lamp light levels.'
+		    doc 'List of all connected lamps'
+	  
+	  property("light_level_all", "int", -1).
+		    doc 'This property controls the light level for all lamps. Non negative values will ignore individual lamp light levels.'
 		
     
     periodic 0.1
+    
+    exception_states :WRONG_LAMP_ADDRESS
 end
 

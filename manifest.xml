@@ -16,4 +16,5 @@
   -->
   <depend package="base/types" />
   <depend package="drivers/orogen/iodrivers_base" />
+  <depend package="drivers/ledlamp_bowtech" />
 </package>
