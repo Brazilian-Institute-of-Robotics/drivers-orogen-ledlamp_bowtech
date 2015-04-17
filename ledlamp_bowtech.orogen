@@ -6,15 +6,17 @@ import_types_from "base"
 using_library "ledlamp_bowtech"
 using_library "iodrivers_base"
 
+using_task_library "iodrivers_base"  
 
 task_context "Task" do
-    subclasses "iodrivers_base::Task"
-
     needs_configuration
 
-    property("current_address", "int", -1).
-	doc'teste'
-
+    property("led_list", "std/vector<ledlamp_bowtech/LedLamp>").
+	doc 'List of all connected lamps'
+    property("port", "std/string", "/dev/ttyUSB0").
+        doc 'Device port'
+    property("baud_rate", "int", 9600).
+        doc 'Device baud rate'
     
     periodic 0.1
 end
