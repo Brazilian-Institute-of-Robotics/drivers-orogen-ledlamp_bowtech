@@ -1,0 +1,19 @@
+--- name:default
+# Device baud rate
+baud_rate: 9600
+# List of all connected lamps
+led_list: 
+ - name: 'left_front'
+   address: 1
+   light_level: 100
+   power_up_light_level: 50
+# This property controls the light level for all lamps. Non negative values will ignore individual lamp light levels.
+light_level_all: -1
+# no documentation available for this property
+metadata:
+  metadata: []
+  properties: []
+  input_ports: []
+  output_ports: []
+# Device port
+port: /dev/ttyUSB0
