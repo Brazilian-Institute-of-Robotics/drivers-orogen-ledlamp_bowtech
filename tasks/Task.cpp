@@ -33,15 +33,16 @@ bool Task::configureHook()
     lamps.openSerial(_port.get(), _baud_rate.get());
 
     led_list = _led_list.get();
+    msg_header = _msg_header.get();
 
     light_level_all  = _light_level_all.get();
 
     /* Sets initializing properties of the lamps */
     for (int i = 0; i < led_list.size(); ++i)
     {
-    	lamps.setPowerUpLightLevel(led_list[i].power_up_light_level, led_list[i].address);
+    	lamps.setPowerUpLightLevel(led_list[i].power_up_light_level, led_list[i].address, msg_header);
     	usleep(100000);
-    	lamps.setLightLevel(led_list[i].light_level, led_list[i].address);
+    	lamps.setLightLevel(led_list[i].light_level, led_list[i].address, msg_header);
     }
 
     return true;
@@ -64,7 +65,7 @@ void Task::updateHook()
     	 * specified in the property _light_level_all */
     	if(light_level_all > 0)
     	{
-    		lamps.setLightLevel(light_level_all);
+    		lamps.setLightLevel(light_level_all, msg_header);
 
     		for(int i = 0; i < led_list.size(); i++)
     			led_list[i].light_level = light_level_all;
@@ -85,7 +86,7 @@ void Task::updateHook()
     			_light_level_all.set(light_level_all);
     			led_list[i].light_level = _led_list.get()[i].light_level;
 
-    			lamps.setLightLevel(led_list[i].light_level, led_list[i].address);
+    			lamps.setLightLevel(led_list[i].light_level, led_list[i].address, msg_header);
     		}
     	}
     }
