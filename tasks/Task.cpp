@@ -114,4 +114,5 @@ void Task::stopHook()
 void Task::cleanupHook()
 {
     TaskBase::cleanupHook();
+    lamps.close();
 }

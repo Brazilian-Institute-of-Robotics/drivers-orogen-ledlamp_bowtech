@@ -3,10 +3,22 @@
 baud_rate: 9600
 # List of all connected lamps
 led_list: 
- - name: 'left_front'
-   address: 1
+ - name: 'left_top'
+   address: 1 
    light_level: 100
-   power_up_light_level: 50
+   power_up_light_level: 100
+ - name: 'right_top'
+   address: 2 
+   light_level: 100
+   power_up_light_level: 100
+ - name: 'left_bottom'
+   address: 3 
+   light_level: 100
+   power_up_light_level: 100
+ - name: 'right_bottom'
+   address: 4 
+   light_level: 100
+   power_up_light_level: 100
 # This property controls the light level for all lamps. Non negative values will ignore individual lamp light levels.
 light_level_all: -1
 # no documentation available for this property
