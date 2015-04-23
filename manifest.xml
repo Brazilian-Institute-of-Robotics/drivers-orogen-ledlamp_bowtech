@@ -15,6 +15,6 @@
   <depend package="dummy-dependency-n" />
   -->
   <depend package="base/types" />
-  <depend package="drivers/orogen/iodrivers_base" />
+  <depend package="drivers/iodrivers_base" />
   <depend package="drivers/ledlamp_bowtech" />
 </package>
