@@ -11,8 +11,8 @@ using_task_library "iodrivers_base"
 task_context "Task" do
     needs_configuration
 
-    property("msg_header", "bool", false).
-        doc 'Adds a <L> header to the message.'
+    property("cmd_label", "std/string", "").
+        doc 'Adds a label to the command message.'
 
     property("port", "std/string", "/dev/ttyUSB0").
         doc 'Device port'
