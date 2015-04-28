@@ -44,6 +44,7 @@ bool Task::configureHook()
     	lamps.setPowerUpLightLevel(led_list[i].power_up_light_level, led_list[i].address);
     	usleep(100000);
     	lamps.setLightLevel(led_list[i].light_level, led_list[i].address);
+    	usleep(100000);
     }
 
     return true;
