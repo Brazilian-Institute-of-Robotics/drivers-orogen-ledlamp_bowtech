@@ -31,7 +31,6 @@ namespace ledlamp_bowtech {
     std::vector<LedLamp> led_list;
     std::vector<uint8_t> led_addresses;
     int light_level_all;
-    bool msg_header;
 
     public:
         /** TaskContext constructor for Task
