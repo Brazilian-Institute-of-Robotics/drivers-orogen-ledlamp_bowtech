@@ -11,15 +11,15 @@
 #include <string>
 
 namespace ledlamp_bowtech {
+    struct Lamp
+    {
+        Lamp()
+            : address(0), level(0) {}
 
-	struct LedLamp
-	{
-		std::string name;
-		uint8_t address;
-		uint8_t light_level;
-		uint8_t power_up_light_level;
-
-	};
+        std::string name;
+        uint8_t address;
+        float level;
+    };
 }
 
 #endif

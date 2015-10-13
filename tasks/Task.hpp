@@ -27,10 +27,10 @@ namespace ledlamp_bowtech {
 	friend class TaskBase;
     protected:
 
-	BowtechDriver lamps;
-    std::vector<LedLamp> led_list;
-    std::vector<uint8_t> led_addresses;
-    int light_level_all;
+	BowtechDriver driver;
+        std::vector<Lamp> lamps;
+        void processIO();
+        uint8_t resolveLightAddress(std::string const& name) const;
 
     public:
         /** TaskContext constructor for Task
