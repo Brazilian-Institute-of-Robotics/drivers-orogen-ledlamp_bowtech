@@ -29,15 +29,10 @@ bool Task::configureHook()
     if (! TaskBase::configureHook())
         return false;
 
-    /* Opens serial port */
-    //lamps.openSerial(_port.get(), _baud_rate.get());
     lamps.openURI(_port.get());
-
-    lamps.setCmdLabel(_cmd_label.get());
 
     led_list = _led_list.get();
     light_level_all  = _light_level_all.get();
-
 
     /* Sets initializing properties of the lamps */
     for (int i = 0; i < led_list.size(); ++i)
