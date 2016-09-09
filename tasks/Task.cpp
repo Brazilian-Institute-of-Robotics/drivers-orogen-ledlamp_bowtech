@@ -30,7 +30,8 @@ bool Task::configureHook()
         return false;
 
     /* Opens serial port */
-    lamps.openSerial(_port.get(), _baud_rate.get());
+    //lamps.openSerial(_port.get(), _baud_rate.get());
+    lamps.openURI(_port.get());
 
     lamps.setCmdLabel(_cmd_label.get());
 
