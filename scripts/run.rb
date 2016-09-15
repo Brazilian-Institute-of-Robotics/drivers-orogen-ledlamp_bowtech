@@ -4,7 +4,6 @@
 # you should use the corresponding ruby run-script. 
 
 require 'orocos'
-require 'vizkit'
 include Orocos
 Orocos.initialize
 
@@ -18,7 +17,6 @@ Orocos.run "ledlamp_bowtech::Task" => "lamp" do
     lamp.configure
     lamp.start
 
-    Vizkit.display lamp
-    Vizkit.exec
+    Orocos.watch(lamp)
 end
    
