@@ -6,22 +6,19 @@ import_types_from "base"
 using_library "ledlamp_bowtech"
 using_library "iodrivers_base"
 
-using_task_library "iodrivers_base"  
+using_task_library "iodrivers_base"
 
 task_context "Task" do
     needs_configuration
+    subclasses "iodrivers_base::Task"
 
-    property("port", "std/string", "/dev/ttyUSB0").
-        doc 'Device port'
-        
     property("led_list", "std/vector<ledlamp_bowtech/LedLamp>").
         doc 'List of all connected lamps'
-	  
+
     property("light_level_all", "int", -1).
         doc 'This property controls the light level for all lamps. Non negative values will ignore individual lamp light levels.'
-		
+
     periodic 0.1
-    
+
     exception_states :WRONG_LAMP_ADDRESS
 end
-

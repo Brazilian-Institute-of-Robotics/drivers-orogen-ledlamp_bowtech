@@ -29,13 +29,17 @@ bool Task::configureHook()
     if (! TaskBase::configureHook())
         return false;
 
-    lamps.openURI(_port.get());
+    if (!_io_port.get().empty())
+      lamps.openURI(_io_port.value());
+  	else
+  		throw std::runtime_error("io_port property not set");
+
 
     led_list = _led_list.get();
     light_level_all  = _light_level_all.get();
 
     /* Sets initializing properties of the lamps */
-    for (int i = 0; i < led_list.size(); ++i)
+    for (unsigned int i = 0; i < led_list.size(); ++i)
     {
     	lamps.setPowerUpLightLevel(led_list[i].power_up_light_level, led_list[i].address);
     	usleep(100000);
@@ -51,6 +55,12 @@ bool Task::startHook()
         return false;
     return true;
 }
+
+void Task::processIO()
+{
+
+}
+
 void Task::updateHook()
 {
     TaskBase::updateHook();
@@ -65,7 +75,7 @@ void Task::updateHook()
     	{
     		lamps.setLightLevel(light_level_all);
 
-    		for(int i = 0; i < led_list.size(); i++)
+    		for(unsigned int i = 0; i < led_list.size(); i++)
     			led_list[i].light_level = light_level_all;
 
     		_led_list.set(led_list);
@@ -73,7 +83,7 @@ void Task::updateHook()
     }
     else
     {
-    	for(int i = 0; i < led_list.size(); i++)
+    	for(unsigned int i = 0; i < led_list.size(); i++)
     	{
     		/* If one of the lamps light level property has changed, the
     		 * property _light_level_all will be set as negative, and the lamps'
