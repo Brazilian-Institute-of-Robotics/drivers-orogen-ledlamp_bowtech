@@ -26,14 +26,15 @@ Task::~Task()
 
 bool Task::configureHook()
 {
-    if (! TaskBase::configureHook())
-        return false;
-
     if (!_io_port.get().empty())
       lamps.openURI(_io_port.value());
-  	else
-  		throw std::runtime_error("io_port property not set");
+    else
+      throw std::runtime_error("io_port property not set");
 
+    setDriver(&lamps);
+
+    if (! TaskBase::configureHook())
+        return false;
 
     led_list = _led_list.get();
     light_level_all  = _light_level_all.get();
