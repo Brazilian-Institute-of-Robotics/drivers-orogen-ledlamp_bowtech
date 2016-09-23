@@ -27,26 +27,14 @@ Task::~Task()
 bool Task::configureHook()
 {
     if (!_io_port.get().empty())
-      lamps.openURI(_io_port.value());
+        lamps.openURI(_io_port.value());
     else
-      throw std::runtime_error("io_port property not set");
+        throw std::runtime_error("io_port property not set");
 
     setDriver(&lamps);
 
     if (! TaskBase::configureHook())
         return false;
-
-    led_list = _led_list.get();
-    light_level_all  = _light_level_all.get();
-
-    /* Sets initializing properties of the lamps */
-    for (unsigned int i = 0; i < led_list.size(); ++i)
-    {
-    	lamps.setPowerUpLightLevel(led_list[i].power_up_light_level, led_list[i].address);
-    	usleep(100000);
-    	lamps.setLightLevel(led_list[i].light_level, led_list[i].address);
-    	usleep(100000);
-    }
 
     return true;
 }
@@ -62,44 +50,32 @@ void Task::processIO()
 
 }
 
+bool Task::setLed_list(std::vector<ledlamp_bowtech::LedLamp > const& ledlist)
+{
+    for (size_t i = 0; i < ledlist.size(); ++i)
+    {
+    	lamps.setPowerUpLightLevel(ledlist[i].power_up_light_level, ledlist[i].address);
+    	usleep(100000);
+    	lamps.setLightLevel(ledlist[i].light_level, ledlist[i].address);
+    	usleep(100000);
+    }
+
+    return(ledlamp_bowtech::TaskBase::setLed_list(ledlist));
+}
+
+bool Task::setLight_level_all(int32_t level)
+{
+    lamps.setLightLevel(level);
+    std::vector<ledlamp_bowtech::LedLamp> ledlist = _led_list.get();
+    for (size_t i = 0; i < ledlist.size(); i++) ledlist[i].light_level = level;
+    _led_list.set(ledlist);
+
+    return(ledlamp_bowtech::TaskBase::setLight_level_all(level));
+}
+
 void Task::updateHook()
 {
     TaskBase::updateHook();
-
-    if (light_level_all != _light_level_all.get())
-    {
-    	light_level_all = _light_level_all.get();
-
-    	/* This if-statement will set the light level of all lamps to the value
-    	 * specified in the property _light_level_all */
-    	if(light_level_all > 0)
-    	{
-    		lamps.setLightLevel(light_level_all);
-
-    		for(unsigned int i = 0; i < led_list.size(); i++)
-    			led_list[i].light_level = light_level_all;
-
-    		_led_list.set(led_list);
-    	}
-    }
-    else
-    {
-    	for(unsigned int i = 0; i < led_list.size(); i++)
-    	{
-    		/* If one of the lamps light level property has changed, the
-    		 * property _light_level_all will be set as negative, and the lamps'
-    		 * light level will be set individually */
-    		if(led_list[i].light_level != _led_list.get()[i].light_level)
-    		{
-    			light_level_all = -1;
-    			_light_level_all.set(light_level_all);
-    			led_list[i].light_level = _led_list.get()[i].light_level;
-
-    			lamps.setLightLevel(led_list[i].light_level, led_list[i].address);
-    		}
-    	}
-    }
-
 }
 void Task::errorHook()
 {
