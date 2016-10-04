@@ -28,8 +28,6 @@ bool Task::configureHook()
 {
     if (!_io_port.get().empty())
         lamps.openURI(_io_port.value());
-    else
-        throw std::runtime_error("io_port property not set");
 
     setDriver(&lamps);
 
