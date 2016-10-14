@@ -13,7 +13,7 @@ task_context "Task" do
     subclasses "iodrivers_base::Task"
 
     #List of all connected lamps
-    property("led_list", "std/vector<ledlamp_bowtech/LedLamp>").dynamic
+    property("led_list", "std/vector<ledlamp_bowtech/LedLamp>")
 
     #Light level control for all lamps. Non negative values will ignore individual lamp light levels.
     property("light_level_all", "int", -1).dynamic

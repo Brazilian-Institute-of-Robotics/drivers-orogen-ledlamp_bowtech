@@ -57,18 +57,6 @@ void Task::processIO()
 
 }
 
-bool Task::setLed_list(std::vector<ledlamp_bowtech::LedLamp > const& ledlist)
-{
-    for (size_t i = 0; i < ledlist.size(); ++i)
-    {
-    	lamps.setPowerUpLightLevel(ledlist[i].power_up_light_level, ledlist[i].address);
-    	usleep(100000);
-    	lamps.setLightLevel(ledlist[i].light_level, ledlist[i].address);
-    	usleep(100000);
-    }
-
-    return(ledlamp_bowtech::TaskBase::setLed_list(ledlist));
-}
 
 bool Task::setLight_level_all(int32_t level)
 {

@@ -27,7 +27,6 @@ namespace ledlamp_bowtech {
 	friend class TaskBase;
     protected:
 
-        virtual bool setLed_list(std::vector<ledlamp_bowtech::LedLamp > const& ledlist);
         virtual bool setLight_level_all(int32_t level);
         BowtechDriver lamps;
         std::vector<LedLamp> led_list;
