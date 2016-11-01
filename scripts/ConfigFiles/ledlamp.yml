@@ -3,19 +3,19 @@
 led_list:
  - name: 'left_top'
    address: 1
-   light_level: 30
-   power_up_light_level: 30
+   light_level: 0.30
+   power_up_light_level: 0.30
  - name: 'right_top'
    address: 2
-   light_level: 30
-   power_up_light_level: 30
+   light_level: 0.30
+   power_up_light_level: 0.30
  - name: 'left_bottom'
    address: 3
-   light_level: 30
-   power_up_light_level: 30
+   light_level: 0.30
+   power_up_light_level: 0.30
  - name: 'right_bottom'
    address: 4
-   light_level: 30
-   power_up_light_level: 30
+   light_level: 0.30
+   power_up_light_level: 0.30
 # Device port
 io_port: 'tcp://192.168.42.6:49162'

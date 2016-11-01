@@ -37,9 +37,9 @@ bool Task::configureHook()
     ledlist = _led_list.get();
     for (size_t i = 0; i < ledlist.size(); ++i)
     {
-    	lamps.setPowerUpLightLevel(ledlist[i].power_up_light_level, ledlist[i].address);
+    	lamps.setPowerUpLightLevel(static_cast<uint8_t>(100*ledlist[i].power_up_light_level), ledlist[i].address);
     	usleep(100000);
-    	lamps.setLightLevel(ledlist[i].light_level, ledlist[i].address);
+    	lamps.setLightLevel(static_cast<uint8_t>(100*ledlist[i].light_level), ledlist[i].address);
     	usleep(100000);
     }
 
