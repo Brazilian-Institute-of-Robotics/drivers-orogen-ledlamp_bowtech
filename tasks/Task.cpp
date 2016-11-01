@@ -62,15 +62,17 @@ void Task::updateHook()
     TaskBase::updateHook();
 
     std::vector<double> led_level;
-    if(_led_input.read(led_level))
+    if(_led_input.read(led_level) == RTT::NewData)
     {
-        if(ledlist.size()==led_level.size())
+        if(ledlist.size()!=led_level.size())
         {
-            for (size_t i = 0; i < ledlist.size(); ++i)
-            {
-                lamps.setLightLevel(static_cast<uint8_t>(100*led_level[i]), ledlist[i].address);
-                usleep(100000);
-            }
+            exception(WRONG_INPUT_SIZE);
+            return;
+        }
+        for (size_t i = 0; i < ledlist.size(); ++i)
+        {
+            lamps.setLightLevel(static_cast<uint8_t>(100*led_level[i]), ledlist[i].address);
+            usleep(100000);
         }
     }
 }
