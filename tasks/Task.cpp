@@ -34,7 +34,7 @@ bool Task::configureHook()
     if (! TaskBase::configureHook())
         return false;
 
-    std::vector<ledlamp_bowtech::LedLamp > ledlist = _led_list.get();
+    ledlist = _led_list.get();
     for (size_t i = 0; i < ledlist.size(); ++i)
     {
     	lamps.setPowerUpLightLevel(ledlist[i].power_up_light_level, ledlist[i].address);
@@ -57,27 +57,22 @@ void Task::processIO()
 
 }
 
-
-bool Task::setLight_level_all(int32_t level)
-{
-    lamps.setPowerUpLightLevel(level);
-    usleep(100000);
-    lamps.setLightLevel(level);
-    usleep(100000);
-    std::vector<ledlamp_bowtech::LedLamp> ledlist = _led_list.get();
-    for (size_t i = 0; i < ledlist.size(); i++)
-    {
-        ledlist[i].power_up_light_level = level;
-        ledlist[i].light_level = level;
-    }
-    _led_list.set(ledlist);
-
-    return(ledlamp_bowtech::TaskBase::setLight_level_all(level));
-}
-
 void Task::updateHook()
 {
     TaskBase::updateHook();
+
+    std::vector<double> led_level;
+    if(_led_input.read(led_level))
+    {
+        if(ledlist.size()==led_level.size())
+        {
+            for (size_t i = 0; i < ledlist.size(); ++i)
+            {
+                lamps.setLightLevel(static_cast<uint8_t>(100*led_level[i]), ledlist[i].address);
+                usleep(100000);
+            }
+        }
+    }
 }
 void Task::errorHook()
 {

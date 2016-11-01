@@ -17,7 +17,5 @@ led_list:
    address: 4
    light_level: 30
    power_up_light_level: 30
-# This property controls the light level for all lamps. Non negative values will ignore individual lamp light levels.
-light_level_all: -1
 # Device port
 io_port: 'tcp://192.168.42.6:49162'

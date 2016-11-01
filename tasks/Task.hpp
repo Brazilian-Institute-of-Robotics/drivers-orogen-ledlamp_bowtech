@@ -27,11 +27,9 @@ namespace ledlamp_bowtech {
 	friend class TaskBase;
     protected:
 
-        virtual bool setLight_level_all(int32_t level);
         BowtechDriver lamps;
-        std::vector<LedLamp> led_list;
-        int light_level_all;
-
+        std::vector<LedLamp> ledlist;
+        
     public:
         /** TaskContext constructor for Task
          * \param name Name of the task. This name needs to be unique to make it identifiable via nameservices.

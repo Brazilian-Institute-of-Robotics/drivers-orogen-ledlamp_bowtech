@@ -14,11 +14,11 @@ task_context "Task" do
 
     #List of all connected lamps
     property("led_list", "std/vector<ledlamp_bowtech/LedLamp>")
+    
+    #Input for led levels, ranging from 0.00 (off) to 1.00 (max level) 
+    input_port "led_input", "std/vector<double>"
 
-    #Light level control for all lamps. Non negative values will ignore individual lamp light levels.
-    property("light_level_all", "int", -1).dynamic
-
-    periodic 0.1
+    port_driven 'led_input'
 
     exception_states :WRONG_LAMP_ADDRESS
 end
