@@ -71,6 +71,11 @@ void Task::updateHook()
         }
         for (size_t i = 0; i < ledlist.size(); ++i)
         {
+            if(led_level[i]<0.0 || led_level[i]>1.0)
+            {
+                exception(INPUT_RANGE_EXCEEDED);
+                return;
+            }
             lamps.setLightLevel(static_cast<uint8_t>(100*led_level[i]), ledlist[i].address);
             usleep(100000);
         }

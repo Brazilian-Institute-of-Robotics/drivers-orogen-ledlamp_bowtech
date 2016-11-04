@@ -20,5 +20,5 @@ task_context "Task" do
 
     port_driven 'led_input'
 
-    exception_states :WRONG_LAMP_ADDRESS, :WRONG_INPUT_SIZE
+    exception_states :WRONG_LAMP_ADDRESS, :WRONG_INPUT_SIZE, :INPUT_RANGE_EXCEEDED
 end
