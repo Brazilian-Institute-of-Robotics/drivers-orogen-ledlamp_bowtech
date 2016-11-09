@@ -1,0 +1,21 @@
+--- name:default
+# List of all connected lamps
+led_list:
+ - name: 'left_top'
+   address: 1
+   light_level: 0.30
+   power_up_light_level: 0.30
+ - name: 'right_top'
+   address: 2
+   light_level: 0.30
+   power_up_light_level: 0.30
+ - name: 'left_bottom'
+   address: 3
+   light_level: 0.30
+   power_up_light_level: 0.30
+ - name: 'right_bottom'
+   address: 4
+   light_level: 0.30
+   power_up_light_level: 0.30
+# Device port - testing on localhost
+io_port: 'tcp://127.0.0.1:49162'
