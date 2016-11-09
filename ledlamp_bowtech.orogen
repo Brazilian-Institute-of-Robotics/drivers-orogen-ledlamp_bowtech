@@ -15,7 +15,8 @@ task_context "Task" do
     #List of all connected lamps
     property("led_list", "std/vector<ledlamp_bowtech/LedLamp>")
     
-    #Input for led levels, ranging from 0.00 (off) to 1.00 (max level) 
+    #Input for led levels, ranging from 0.00 (off) to 1.00 (max level)
+    # led_input vector must have the same size as led_list (read from config file) 
     input_port "led_input", "std/vector<double>"
 
     port_driven 'led_input'

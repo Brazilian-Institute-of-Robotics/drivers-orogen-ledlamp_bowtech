@@ -37,6 +37,16 @@ bool Task::configureHook()
     ledlist = _led_list.get();
     for (size_t i = 0; i < ledlist.size(); ++i)
     {
+        if(ledlist[i].light_level<0.0 || ledlist[i].light_level>1.0)
+        {
+            RTT::log(RTT::Error) << "light_level range in config file should be [0.00, 1.00]" << RTT::endlog();
+            return false;
+        }
+        if(ledlist[i].power_up_light_level<0.0 || ledlist[i].power_up_light_level>1.0)
+        {
+            RTT::log(RTT::Error) << "power_up_light_level range in config file should be [0.00, 1.00]" << RTT::endlog();
+            return false;
+        }
     	lamps.setPowerUpLightLevel(static_cast<uint8_t>(100*ledlist[i].power_up_light_level), ledlist[i].address);
     	usleep(100000);
     	lamps.setLightLevel(static_cast<uint8_t>(100*ledlist[i].light_level), ledlist[i].address);
