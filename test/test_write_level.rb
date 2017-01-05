@@ -1,6 +1,7 @@
 require 'minitest/spec'
 require 'orocos/test/component'
 require 'minitest/autorun'
+require 'socket'
 
 describe 'ledlamp_bowtech::Task' do
 
@@ -8,8 +9,22 @@ describe 'ledlamp_bowtech::Task' do
     start  'led_task', 'ledlamp_bowtech::Task' => 'led_task'
     writer 'led_task', 'led_input', attr_name: 'led_input'
 
+    def driver_remote_port
+        1234
+    end
+
+    def driver_local_port
+        1235
+    end
+
     before do
+        @sock = UDPSocket.new
+        @sock.bind("127.0.0.1", driver_remote_port)
         led_task.apply_conf_file('ledlamp.yml',['default'])
+    end
+
+    after do
+        @sock.close
     end
 
     it 'should not break while configuring, starting, stopping and cleaning up' do
