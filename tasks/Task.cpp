@@ -47,10 +47,10 @@ bool Task::configureHook()
             RTT::log(RTT::Error) << "power_up_light_level range in config file should be [0.00, 1.00]" << RTT::endlog();
             return false;
         }
-    	lamps.setPowerUpLightLevel(static_cast<uint8_t>(100*ledlist[i].power_up_light_level), ledlist[i].address);
-    	usleep(100000);
-    	lamps.setLightLevel(static_cast<uint8_t>(100*ledlist[i].light_level), ledlist[i].address);
-    	usleep(100000);
+        lamps.setPowerUpLightLevel(ledlist[i].power_up_light_level, ledlist[i].address);
+        usleep(100000);
+        lamps.setLightLevel(ledlist[i].light_level, ledlist[i].address);
+        usleep(100000);
     }
 
     return true;
@@ -86,7 +86,7 @@ void Task::updateHook()
                 exception(INPUT_RANGE_EXCEEDED);
                 return;
             }
-            lamps.setLightLevel(static_cast<uint8_t>(100*led_level[i]), ledlist[i].address);
+            lamps.setLightLevel(led_level[i], ledlist[i].address);
             usleep(100000);
         }
     }
