@@ -16,8 +16,8 @@ namespace ledlamp_bowtech {
 	{
 		std::string name;
 		uint8_t address;
-		uint8_t light_level;
-		uint8_t power_up_light_level;
+		float light_level;
+		float power_up_light_level;
 
 	};
 }

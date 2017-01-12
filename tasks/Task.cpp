@@ -26,21 +26,31 @@ Task::~Task()
 
 bool Task::configureHook()
 {
+    if (!_io_port.get().empty())
+        lamps.openURI(_io_port.value());
+
+    setDriver(&lamps);
+
     if (! TaskBase::configureHook())
         return false;
 
-    lamps.openURI(_port.get());
-
-    led_list = _led_list.get();
-    light_level_all  = _light_level_all.get();
-
-    /* Sets initializing properties of the lamps */
-    for (int i = 0; i < led_list.size(); ++i)
+    ledlist = _led_list.get();
+    for (size_t i = 0; i < ledlist.size(); ++i)
     {
-    	lamps.setPowerUpLightLevel(led_list[i].power_up_light_level, led_list[i].address);
-    	usleep(100000);
-    	lamps.setLightLevel(led_list[i].light_level, led_list[i].address);
-    	usleep(100000);
+        if(ledlist[i].light_level<0.0 || ledlist[i].light_level>1.0)
+        {
+            RTT::log(RTT::Error) << "light_level range in config file should be [0.00, 1.00]" << RTT::endlog();
+            return false;
+        }
+        if(ledlist[i].power_up_light_level<0.0 || ledlist[i].power_up_light_level>1.0)
+        {
+            RTT::log(RTT::Error) << "power_up_light_level range in config file should be [0.00, 1.00]" << RTT::endlog();
+            return false;
+        }
+        lamps.setPowerUpLightLevel(ledlist[i].power_up_light_level, ledlist[i].address);
+        usleep(100000);
+        lamps.setLightLevel(ledlist[i].light_level, ledlist[i].address);
+        usleep(100000);
     }
 
     return true;
@@ -51,44 +61,35 @@ bool Task::startHook()
         return false;
     return true;
 }
+
+void Task::processIO()
+{
+
+}
+
 void Task::updateHook()
 {
     TaskBase::updateHook();
 
-    if (light_level_all != _light_level_all.get())
+    std::vector<double> led_level;
+    if(_led_input.read(led_level) == RTT::NewData)
     {
-    	light_level_all = _light_level_all.get();
-
-    	/* This if-statement will set the light level of all lamps to the value
-    	 * specified in the property _light_level_all */
-    	if(light_level_all > 0)
-    	{
-    		lamps.setLightLevel(light_level_all);
-
-    		for(int i = 0; i < led_list.size(); i++)
-    			led_list[i].light_level = light_level_all;
-
-    		_led_list.set(led_list);
-    	}
+        if(ledlist.size()!=led_level.size())
+        {
+            exception(WRONG_INPUT_SIZE);
+            return;
+        }
+        for (size_t i = 0; i < ledlist.size(); ++i)
+        {
+            if(led_level[i]<0.0 || led_level[i]>1.0)
+            {
+                exception(INPUT_RANGE_EXCEEDED);
+                return;
+            }
+            lamps.setLightLevel(led_level[i], ledlist[i].address);
+            usleep(100000);
+        }
     }
-    else
-    {
-    	for(int i = 0; i < led_list.size(); i++)
-    	{
-    		/* If one of the lamps light level property has changed, the
-    		 * property _light_level_all will be set as negative, and the lamps'
-    		 * light level will be set individually */
-    		if(led_list[i].light_level != _led_list.get()[i].light_level)
-    		{
-    			light_level_all = -1;
-    			_light_level_all.set(light_level_all);
-    			led_list[i].light_level = _led_list.get()[i].light_level;
-
-    			lamps.setLightLevel(led_list[i].light_level, led_list[i].address);
-    		}
-    	}
-    }
-
 }
 void Task::errorHook()
 {

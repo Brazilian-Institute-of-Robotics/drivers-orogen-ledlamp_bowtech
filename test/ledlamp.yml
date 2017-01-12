@@ -17,5 +17,5 @@ led_list:
    address: 4
    light_level: 0.30
    power_up_light_level: 0.30
-# Device port
-io_port: 'tcp://192.168.42.6:49162'
+# Device port - testing on localhost
+io_port: 'udp://127.0.0.1:1234:1235'
